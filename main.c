@@ -25,13 +25,22 @@ int main()
     {
         print_menu();
 
-        if (scanf("%d", &choice) != 1)
-        {
-            printf("输入无效，请重新输入\n");
-            int c;
-    		while((c = getchar()) != '\n' && c != EOF);
-            continue;
-        }
+        int ret = scanf("%d",&choice);
+		
+		if(ret == EOF)
+		{
+			printf("\n检测到输入结束，程序退出\n");
+			running = 0;
+			break;
+		}
+		if(ret != 1)
+		{
+			printf("输入无效，请重新输入\n");
+			int c;
+			while ((c=getchar()) != '\n' && c != EOF);
+			continue;
+		}
+		
 		int ch;
         while ((ch = getchar()) != '\n' && ch!=EOF);
 
