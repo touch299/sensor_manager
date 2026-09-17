@@ -3,17 +3,17 @@
 void print_menu(void)
 {
     printf("\n");
-    printf("  传感器数据管理器\n");
+    printf("  传感器数据管理系统\n");
     printf("  ================\n");
-    printf("  1. 添加传感器数据\n");
-    printf("  2. 查看所有数据\n");
-    printf("  3. 按名称删除\n");
-    printf("  4. 按名称修改\n");
+    printf("  1. 添加记录\n");
+    printf("  2. 显示所有记录\n");
+    printf("  3. 删除记录\n");
+    printf("  4. 修改记录\n");
     printf("  5. 保存到文件\n");
     printf("  6. 从文件加载\n");
     printf("  0. 退出\n");
     printf("  ================\n");
-    printf("  请选择: ");
+    printf("  请输入选项: ");
 }
 
 int main()
@@ -21,17 +21,22 @@ int main()
     SensorData *records = NULL;
     int choice;
     int running = 1;
-    while(running)
+    while (running)
     {
         print_menu();
-        if(scanf("%d", &choice) != 1)
+
+        if (scanf("%d", &choice) != 1)
         {
-            printf("输入无效，请重试\n");
-            while (getchar() != '\n');
+            printf("输入无效，请重新输入\n");
+            int c;
+    		while((c = getchar()) != '\n' && c != EOF);
             continue;
         }
-        while (getchar() != '\n');
-        switch(choice){
+		int ch;
+        while ((ch = getchar()) != '\n' && ch!=EOF);
+
+        switch (choice)
+        {
             case 1:
             {
                 add_records(&records);
@@ -45,11 +50,11 @@ int main()
             case 3:
             {
                 int a = delete_node(&records);
-                if(a == -1)
+                if (a == -1)
                 {
                     printf("删除失败\n");
                 }
-                else 
+                else
                 {
                     printf("删除成功\n");
                 }
@@ -58,11 +63,11 @@ int main()
             case 4:
             {
                 int a = update_records(records);
-                if(a == -1)
+                if (a == -1)
                 {
                     printf("修改失败\n");
                 }
-                else 
+                else
                 {
                     printf("修改成功\n");
                 }
@@ -70,10 +75,10 @@ int main()
             }
             case 5:
             {
-                int a = save_to_file(records,"data.txt");
-                if(a == -1)
+                int a = save_to_file(records, "data.txt");
+                if (a == -1)
                 {
-                    printf("保存错误\n");
+                    printf("保存失败\n");
                     break;
                 }
                 printf("保存成功\n");
@@ -81,10 +86,10 @@ int main()
             }
             case 6:
             {
-                int a = load_from_file(&records,"data.txt");
-                if(a == -1)
+                int a = load_from_file(&records, "data.txt");
+                if (a == -1)
                 {
-                    printf("加载错误\n");
+                    printf("加载失败\n");
                     break;
                 }
                 printf("加载成功\n");
@@ -95,8 +100,9 @@ int main()
                 free_list(&records);
                 break;
             default:
-                printf("无效选项\n");        
+                printf("输入错误\n");
         }
     }
+
     return 0;
 }
